@@ -24,10 +24,15 @@
 ## 2. Installation
 
 ```bash
-# Linux / WSL (or a distro that already ships 3.5: Debian 13, Ubuntu 25.10…)
-git clone --depth 1 --branch openssl-3.5.0 https://github.com/openssl/openssl.git
-cd openssl && ./Configure --prefix=/opt/openssl-3.5 && make -j"$(nproc)" && sudo make install
-export PATH=/opt/openssl-3.5/bin:$PATH LD_LIBRARY_PATH=/opt/openssl-3.5/lib64
+sudo apt update && sudo apt install -y build-essential perl wget && \
+cd /tmp && \
+wget -q https://github.com/openssl/openssl/releases/download/openssl-3.5.4/openssl-3.5.4.tar.gz && \
+tar xzf openssl-3.5.4.tar.gz && cd openssl-3.5.4 && \
+./Configure --prefix=/opt/openssl-3.5 --openssldir=/opt/openssl-3.5/ssl \
+  -Wl,-rpath,/opt/openssl-3.5/lib64 && \
+make -j$(nproc) && sudo make install_sw && \
+sudo ln -sf /opt/openssl-3.5/bin/openssl /usr/local/bin/openssl && \
+hash -r && openssl version
 ```
 
 On Windows, **Git for Windows** already bundles OpenSSL 3.5. The demo was run with 3.5.5 in Git Bash.
@@ -44,6 +49,7 @@ openssl list -tls-groups -tls1_3         # ... X25519MLKEM768:SecP384r1MLKEM1024
 No code is needed: you only pick the group on the server and on the client.
 
 ```bash
+export OPENSSL_CONF=/etc/ssl/openssl.cnf
 # Test certificate (ECDSA; a post-quantum one also works: -newkey mldsa65)
 openssl req -x509 -newkey ec -pkeyopt ec_paramgen_curve:P-256 -nodes \
   -keyout ec.key -out ec.crt -days 365 -subj "/CN=localhost"
