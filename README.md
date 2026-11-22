@@ -2,7 +2,7 @@
 
 ![AI-assisted](https://img.shields.io/badge/AI--assisted-Claude-8A63D2)
 
-> **AI usage:** this README, the `test_pqc_tls.sh` script and the presentation slides were created with the help of an AI assistant (Claude, by Anthropic). The test results and performance figures come from real runs of the script with OpenSSL 3.5.5, and were reviewed by the author.
+> **AI usage:** The tool selection, test-case design, test environment and analysis of the results are my own work. I used an AI assistant (Claude, by Anthropic) for a first draft of the `test_pqc_tls.sh` script and of the presentation slides, and for help with the wording of this README. I reviewed, debugged and adapted all of it. All the results and performance figures come from my own runs of the script with OpenSSL 3.5.5.
 
 ## 1. Identification & selection
 
